@@ -51,7 +51,7 @@ const ProfilePage = () => {
 
   const getLoggedInUserFriends = async () => {
     const response = await fetch(
-      `https://tutedude-backend-production.up.railway.app/users/${loggedInUserId}/friends`,
+      `https://tutedude-backend-alpha.vercel.app/users/${loggedInUserId}/friends`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
