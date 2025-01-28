@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,40 +7,46 @@ import { setFriends } from "state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 
-const Friend = ({friendId,name,subtitle,userPicturePath,sameUser}) => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const { _id } = useSelector((state) => state.user);
-    const token = useSelector((state) => state.token);
-    const friends = useSelector((state) => state.user.friends);
-  
-    const { palette } = useTheme();
-    const primaryLight = palette.primary.light;
-    const primaryDark = palette.primary.dark;
-    const main = palette.neutral.main;
-    const medium = palette.neutral.medium;
-    
-    const isFriend=friends.find((friend)=>friend._id===friendId)
-    //to show the add or remove friend option
+const Friend = ({ friendId, name, subtitle, userPicturePath, sameUser }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { _id } = useSelector((state) => state.user);
+  const token = useSelector((state) => state.token);
+  const friends = useSelector((state) => state.user.friends);
 
-    const patchFriend=async ()=>{
-        const response = await fetch(`http://localhost:3001/users/${_id}/${friendId}`,{
-            method:"PATCH",
-            headers:{Authorization:`Bearer ${token}`,"Content-Type":"application/json"},
-        })
-        const data = await response.json();
-        dispatch(setFriends({friends:data}))
-    }
+  const { palette } = useTheme();
+  const primaryLight = palette.primary.light;
+  const primaryDark = palette.primary.dark;
+  const main = palette.neutral.main;
+  const medium = palette.neutral.medium;
+
+  const isFriend = friends.find((friend) => friend._id === friendId);
+  //to show the add or remove friend option
+
+  const patchFriend = async () => {
+    const response = await fetch(
+      `https://tutedude-backend-alpha.vercel.app/users/${_id}/${friendId}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    dispatch(setFriends({ friends: data }));
+  };
 
   return (
     <FlexBetween>
-         <FlexBetween gap="1rem">
+      <FlexBetween gap="1rem">
         <UserImage image={userPicturePath} size="55px" />
         <Box
           onClick={() => {
             navigate(`/profile/${friendId}`);
             navigate(0);
-             //on going to user and if we try to go to another person profile page, the components dont rerender, so we have to manualy refresh the page
+            //on going to user and if we try to go to another person profile page, the components dont rerender, so we have to manualy refresh the page
           }}
         >
           <Typography
@@ -61,8 +67,7 @@ const Friend = ({friendId,name,subtitle,userPicturePath,sameUser}) => {
           </Typography>
         </Box>
       </FlexBetween>
-      {
-        !sameUser &&
+      {!sameUser && (
         <IconButton
           onClick={() => patchFriend()}
           sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
@@ -73,10 +78,9 @@ const Friend = ({friendId,name,subtitle,userPicturePath,sameUser}) => {
             <PersonAddOutlined sx={{ color: primaryDark }} />
           )}
         </IconButton>
-
-      }
+      )}
     </FlexBetween>
-  )
-}
+  );
+};
 
-export default Friend
+export default Friend;
