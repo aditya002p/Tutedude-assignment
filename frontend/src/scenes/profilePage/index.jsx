@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { Box, useMediaQuery, Typography, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
