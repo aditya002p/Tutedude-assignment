@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Form from './Form';
